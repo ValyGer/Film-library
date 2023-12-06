@@ -45,7 +45,7 @@ class FilmValidationTest {
     }
 
     @Test
-    void EmptyRequest() {  // пустой запрос
+    void emptyRequest() {  // пустой запрос
         Film film = new Film();
         Assertions.assertThrows(ValidationException.class, () ->
                 filmValidation.validateFilm(film), "Передается пустой запрос");
