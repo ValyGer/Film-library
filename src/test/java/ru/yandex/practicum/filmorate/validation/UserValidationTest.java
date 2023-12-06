@@ -49,7 +49,7 @@ class UserValidationTest {
     }
 
     @Test
-    void EmptyRequest() {  // пустой запрос
+    void emptyRequest() {  // пустой запрос
         User user = new User();
         Assertions.assertThrows(ValidationException.class, () ->
             userValidation.validateUser(user), "Передается пустой запрос");
