@@ -73,7 +73,7 @@ public class UserValidationTest {
         User user = new User("mail@mail.ru", "Login", "Nike Name",
                 LocalDate.of(1994, 10, 25));
         userController.createUser(user);
-        User user1 = new User(user.getId(), "NEWmail@mail.ru", "NEW Login", "NEW Nike Name",
+        User user1 = new User(user.getId(), "NEWmail@mail.ru", "NEWLogin", "NEW Nike Name",
                 LocalDate.of(2001, 12, 7));
         User user2 = userController.loadUser(user1);
         Assertions.assertEquals(user2.getEmail(), user1.getEmail(), "Электронная почта не обновлено");
