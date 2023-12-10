@@ -4,10 +4,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ru.yandex.practicum.filmorate.controller.UserController;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
+import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.User;
 import static ru.yandex.practicum.filmorate.validation.UserValidation.validateUser;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class UserValidationTest {
 
@@ -53,5 +55,39 @@ public class UserValidationTest {
         User user = new User();
         Assertions.assertThrows(ValidationException.class, () ->
             validateUser(user), "Передается пустой запрос");
+    }
+
+    @Test
+    void addNewUserSuccessful() {
+        User user = new User("mail@mail.ru", "Login", "Nike Name",
+                LocalDate.of(1994, 10, 25));
+        User user1 = userController.createUser(user);
+        Assertions.assertEquals(user1.getEmail(), user.getEmail(), "Электронная почта не совпадает");
+        Assertions.assertEquals(user1.getLogin(), user.getLogin(), "Логин не совпадает");
+        Assertions.assertEquals(user1.getName(), user.getName(), "Имя не совпадает");
+        Assertions.assertEquals(user1.getBirthday(), user.getBirthday(), "Год рождения не совпадает");
+    }
+
+    @Test
+    void updatingUserFromList() {
+        User user = new User("mail@mail.ru", "Login", "Nike Name",
+                LocalDate.of(1994, 10, 25));
+        userController.createUser(user);
+        User user1 = new User(user.getId(), "NEWmail@mail.ru", "NEW Login", "NEW Nike Name",
+                LocalDate.of(2001, 12, 7));
+        User user2 = userController.loadUser(user1);
+        Assertions.assertEquals(user2.getEmail(), user1.getEmail(), "Электронная почта не обновлено");
+        Assertions.assertEquals(user2.getLogin(), user1.getLogin(), "Логин не обновлен");
+        Assertions.assertEquals(user2.getName(), user1.getName(), "Имя не обновлено");
+        Assertions.assertEquals(user2.getBirthday(), user1.getBirthday(), "Год рождения не обновлен");
+    }
+
+    @Test
+    void getAllUsers() {
+        User user = new User("mail@mail.ru", "Login", "Nike Name",
+                LocalDate.of(1994, 10, 25));
+        userController.createUser(user);
+        List<User> listOfUsers = userController.getAllUsers();
+        Assertions.assertEquals(listOfUsers.size(), 1, "В списке пользователей должен быть один пользователь");
     }
 }

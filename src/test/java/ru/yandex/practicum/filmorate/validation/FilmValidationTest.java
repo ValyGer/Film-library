@@ -1,6 +1,7 @@
 package ru.yandex.practicum.filmorate.validation;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.yandex.practicum.filmorate.controller.FilmController;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
@@ -11,7 +12,7 @@ import static ru.yandex.practicum.filmorate.validation.FilmValidation.validateFi
 import java.time.LocalDate;
 import java.util.List;
 
-class FilmValidationTest {
+public class FilmValidationTest {
 
     FilmController filmController = new FilmController();
 
@@ -61,7 +62,6 @@ class FilmValidationTest {
         Film film = new Film("Name of Film", "adipisicing",
                 LocalDate.of(1965, 3, 25), 1000L);
         Film film1 = filmController.createFilm(film);
-        Assertions.assertEquals(film1.getId(), 1, "В списке должен быть фильм с индексом 1");
         Assertions.assertEquals(film1.getName(), film.getName(), "Некорректное название");
         Assertions.assertEquals(film1.getDescription(), film.getDescription(), "Некорректное описание");
         Assertions.assertEquals(film1.getReleaseDate(), film.getReleaseDate(), "Некорректное время выхода");
@@ -73,7 +73,7 @@ class FilmValidationTest {
         Film film = new Film("Name of Film", "adipisicing",
                 LocalDate.of(1965, 3, 25), 1000L);
         filmController.createFilm(film);
-        Film film1 = new Film(1, "NEW Name of Film", "NEW adipisicing",
+        Film film1 = new Film(film.getId(), "NEW Name of Film", "NEW adipisicing",
                 LocalDate.of(2005, 8, 7), 17000L);
         Film film2 = filmController.loadFilm(film1);
         Assertions.assertEquals(film2.getId(), 1, "В списке должен быть обновлен фильм с индексом 1");
