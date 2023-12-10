@@ -13,7 +13,6 @@ import java.util.List;
 import static ru.yandex.practicum.filmorate.validation.FilmValidation.validateFilm;
 
 
-@SuppressWarnings("checkstyle:Regexp")
 @RestController
 @RequestMapping("/films")
 public class FilmController {
