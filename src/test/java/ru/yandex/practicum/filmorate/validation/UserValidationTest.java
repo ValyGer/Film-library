@@ -5,33 +5,33 @@ import org.junit.jupiter.api.Test;
 import ru.yandex.practicum.filmorate.controller.UserController;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
+import static ru.yandex.practicum.filmorate.validation.UserValidation.validateUser;
 
 import java.time.LocalDate;
 
 class UserValidationTest {
 
     UserController userController = new UserController();
-    UserValidation userValidation = new UserValidation();
 
     @Test
     void invalidEmailMissingCharacterAt() { // в мэйле отсутствует @
         User user = new User("mail.ru", "Login", "Nike Name", LocalDate.of(1986, 10, 25));
         Assertions.assertThrows(ValidationException.class, () ->
-                        userValidation.validateUser(user), "Email не содержат символ @");
+                        validateUser(user), "Email не содержат символ @");
     }
 
     @Test
     void blankEmail() { // незаполнен мэйл
         User user = new User("", "Login", "Nike Name", LocalDate.of(1986, 10, 25));
         Assertions.assertThrows(ValidationException.class, () ->
-            userValidation.validateUser(user), "Email пустой");
+            validateUser(user), "Email пустой");
     }
 
     @Test
     void invalidLoginWithSpace() { //передан логин с пробелом
         User user = new User("mail@mail.ru", "Log in", "Nike Name", LocalDate.of(1986, 10, 25));
         Assertions.assertThrows(ValidationException.class, () ->
-                userValidation.validateUser(user), "Логин содержит пробел");
+                validateUser(user), "Логин содержит пробел");
     }
 
     @Test
@@ -45,13 +45,13 @@ class UserValidationTest {
     void incorrectDateOfBirth() { //некорректная дата рождения
         User user = new User("mail@mail.ru", "Login", "Nike Name", LocalDate.of(2024, 10, 25));
         Assertions.assertThrows(ValidationException.class, () ->
-                userValidation.validateUser(user), "Некорректная дата рождения");
+                validateUser(user), "Некорректная дата рождения");
     }
 
     @Test
     void emptyRequest() {  // пустой запрос
         User user = new User();
         Assertions.assertThrows(ValidationException.class, () ->
-            userValidation.validateUser(user), "Передается пустой запрос");
+            validateUser(user), "Передается пустой запрос");
     }
 }

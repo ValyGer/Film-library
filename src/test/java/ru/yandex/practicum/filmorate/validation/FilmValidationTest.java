@@ -4,18 +4,19 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
+import static ru.yandex.practicum.filmorate.validation.FilmValidation.validateFilm;
+
 
 import java.time.LocalDate;
 
 class FilmValidationTest {
-    FilmValidation filmValidation = new FilmValidation();
 
     @Test
     void emptyNameIsPassed() { // пустое название
         Film film = new Film("", "adipisicing",
                 LocalDate.of(1965, 3, 25), 100L);
         Assertions.assertThrows(ValidationException.class, () ->
-                filmValidation.validateFilm(film), "Передано пустое название");
+                validateFilm(film), "Передано пустое название");
     }
 
     @Test
@@ -25,7 +26,7 @@ class FilmValidationTest {
                 "миллионов. о Куглов, который за время «своего отсутствия», стал кандидатом Коломбани.",
                 LocalDate.of(1965, 3, 25), 100L);
         Assertions.assertThrows(ValidationException.class, () ->
-                filmValidation.validateFilm(film), "Передано описание более 200 символов");
+                validateFilm(film), "Передано описание более 200 символов");
     }
 
     @Test
@@ -33,7 +34,7 @@ class FilmValidationTest {
         Film film = new Film("File name", "adipisicing",
                 LocalDate.of(1765, 3, 25), 100L);
         Assertions.assertThrows(ValidationException.class, () ->
-                filmValidation.validateFilm(film), "Неверная дата релиза");
+                validateFilm(film), "Неверная дата релиза");
     }
 
     @Test
@@ -41,13 +42,13 @@ class FilmValidationTest {
         Film film = new Film("File name", "adipisicing",
                 LocalDate.of(1965, 3, 25), -100L);
         Assertions.assertThrows(ValidationException.class, () ->
-                filmValidation.validateFilm(film), "Длительность отрицательная");
+                validateFilm(film), "Длительность отрицательная");
     }
 
     @Test
     void emptyRequest() {  // пустой запрос
         Film film = new Film();
         Assertions.assertThrows(ValidationException.class, () ->
-                filmValidation.validateFilm(film), "Передается пустой запрос");
+                validateFilm(film), "Передается пустой запрос");
     }
 }

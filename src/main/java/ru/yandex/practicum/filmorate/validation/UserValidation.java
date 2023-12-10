@@ -12,7 +12,7 @@ public class UserValidation {
 
     private static final  Logger log = LoggerFactory.getLogger(UserValidation.class);
 
-    public void validateUser(User user) {
+    public static void validateUser(User user) {
         if (user != null) {
             if (((user.getEmail() == null) || (user.getEmail().isBlank()))) {
                 log.debug("Email не должен быть пустым");
