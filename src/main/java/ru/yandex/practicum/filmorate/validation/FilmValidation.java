@@ -13,7 +13,7 @@ public class FilmValidation {
     private static final int  MAX_DESCRIPTION_LENGTH = 200;
     private static final LocalDate START_FIRST_FILM = LocalDate.of(1895, 12, 28);
 
-    public void validateFilm(Film film) {
+    public static void validateFilm(Film film) {
         if (film != null) {
             if ((film.getName() == null) || film.getName().isBlank()) {
                 log.debug("Название не может быть пустым");

@@ -5,11 +5,12 @@ import org.slf4j.LoggerFactory;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
 import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.filmorate.validation.FilmValidation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import static ru.yandex.practicum.filmorate.validation.FilmValidation.validateFilm;
 
 
 @SuppressWarnings("checkstyle:Regexp")
@@ -19,11 +20,10 @@ public class FilmController {
     private static final  Logger log = LoggerFactory.getLogger(FilmController.class);
     private final HashMap<Integer, Film> films = new HashMap<>();
     private static int generateFilmId = 0;
-    private final FilmValidation filmValidation = new FilmValidation();
 
     @PostMapping // Добавление нового фильма
     public Film createFilm(@RequestBody Film film) {
-        filmValidation.validateFilm(film);
+        validateFilm(film);
         film.setId(++generateFilmId);
         films.put(film.getId(), film);
         log.debug("Добавлен новый фильм {}", film);
@@ -32,7 +32,7 @@ public class FilmController {
 
     @PutMapping // Обновление информации о фильме или создание нового
     public Film loadFilm(@RequestBody Film film) {
-        filmValidation.validateFilm(film);
+        validateFilm(film);
         Film saved = films.get(film.getId());
         if (saved == null) {
             log.debug("Фильм не найден {}", film);
