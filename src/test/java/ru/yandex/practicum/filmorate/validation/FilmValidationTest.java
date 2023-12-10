@@ -2,14 +2,18 @@ package ru.yandex.practicum.filmorate.validation;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import ru.yandex.practicum.filmorate.controller.FilmController;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
 import static ru.yandex.practicum.filmorate.validation.FilmValidation.validateFilm;
 
 
 import java.time.LocalDate;
+import java.util.List;
 
 class FilmValidationTest {
+
+    FilmController filmController = new FilmController();
 
     @Test
     void emptyNameIsPassed() { // пустое название
@@ -50,5 +54,41 @@ class FilmValidationTest {
         Film film = new Film();
         Assertions.assertThrows(ValidationException.class, () ->
                 validateFilm(film), "Передается пустой запрос");
+    }
+
+    @Test
+    void addNewFilmSuccessful() {
+        Film film = new Film("Name of Film", "adipisicing",
+                LocalDate.of(1965, 3, 25), 1000L);
+        Film film1 = filmController.createFilm(film);
+        Assertions.assertEquals(film1.getId(), 1, "В списке должен быть фильм с индексом 1");
+        Assertions.assertEquals(film1.getName(), film.getName(), "Некорректное название");
+        Assertions.assertEquals(film1.getDescription(), film.getDescription(), "Некорректное описание");
+        Assertions.assertEquals(film1.getReleaseDate(), film.getReleaseDate(), "Некорректное время выхода");
+        Assertions.assertEquals(film1.getDuration(), film.getDuration(), "Некорректная продолжительность");
+    }
+
+    @Test
+    void updatingMovieFromList() {
+        Film film = new Film("Name of Film", "adipisicing",
+                LocalDate.of(1965, 3, 25), 1000L);
+        filmController.createFilm(film);
+        Film film1 = new Film(1, "NEW Name of Film", "NEW adipisicing",
+                LocalDate.of(2005, 8, 7), 17000L);
+        Film film2 = filmController.loadFilm(film1);
+        Assertions.assertEquals(film2.getId(), 1, "В списке должен быть обновлен фильм с индексом 1");
+        Assertions.assertEquals(film2.getName(), film1.getName(), "Название фильма обновлено");
+        Assertions.assertEquals(film2.getDescription(), film1.getDescription(), "Описание фильма не откорректировано");
+        Assertions.assertEquals(film2.getReleaseDate(), film1.getReleaseDate(), "Не изменено время выхода");
+        Assertions.assertEquals(film2.getDuration(), film1.getDuration(), "Не изменена продолжительность");
+    }
+
+    @Test
+    void getAllFilms() {
+        Film film = new Film("Name of Film", "adipisicing",
+                LocalDate.of(1965, 3, 25), 1000L);
+        filmController.createFilm(film);
+        List<Film> listOfFilms = filmController.getAllFilms();
+        Assertions.assertEquals(listOfFilms.size(), 1, "В списке фильмов должен быть один фильм");
     }
 }

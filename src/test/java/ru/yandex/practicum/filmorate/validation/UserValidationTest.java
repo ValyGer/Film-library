@@ -9,7 +9,7 @@ import static ru.yandex.practicum.filmorate.validation.UserValidation.validateUs
 
 import java.time.LocalDate;
 
-class UserValidationTest {
+public class UserValidationTest {
 
     UserController userController = new UserController();
 

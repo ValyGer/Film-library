@@ -22,6 +22,14 @@ public class Film {
         this.duration = Duration.ofSeconds(second);
     }
 
+    public Film(int id, String name, String description, LocalDate releaseDate, Long second) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.releaseDate = releaseDate;
+        this.duration = Duration.ofSeconds(second);
+    }
+
     public Long getDuration() {
         return duration.toSeconds();
     }
