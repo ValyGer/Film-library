@@ -5,14 +5,20 @@ import org.junit.jupiter.api.Test;
 import ru.yandex.practicum.filmorate.controller.UserController;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.service.UserService;
+import ru.yandex.practicum.filmorate.service.UserServiceImpl;
+import ru.yandex.practicum.filmorate.storage.InMemoryUserStorage;
+import ru.yandex.practicum.filmorate.storage.UserStorage;
+
 import static ru.yandex.practicum.filmorate.validation.UserValidation.validateUser;
 
 import java.time.LocalDate;
 import java.util.List;
 
 public class UserValidationTest {
-
-    UserController userController = new UserController();
+    InMemoryUserStorage inMemoryUserStorage = new InMemoryUserStorage();
+    UserService userService =  new UserServiceImpl(inMemoryUserStorage);
+    UserController userController = new UserController(userService);
 
     @Test
     void invalidEmailMissingCharacterAt() { // в мэйле отсутствует @

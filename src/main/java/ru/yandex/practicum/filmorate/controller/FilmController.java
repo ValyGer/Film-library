@@ -1,50 +1,31 @@
 package ru.yandex.practicum.filmorate.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import ru.yandex.practicum.filmorate.exception.ValidationException;
+import lombok.AllArgsConstructor;
 import ru.yandex.practicum.filmorate.model.Film;
 import org.springframework.web.bind.annotation.*;
+import ru.yandex.practicum.filmorate.service.FilmService;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-
-import static ru.yandex.practicum.filmorate.validation.FilmValidation.validateFilm;
 
 
 @RestController
 @RequestMapping("/films")
+@AllArgsConstructor
 public class FilmController {
-    private static final  Logger log = LoggerFactory.getLogger(FilmController.class);
-    private final HashMap<Integer, Film> films = new HashMap<>();
-    private static int generateFilmId = 0;
+    private FilmService filmService;
 
     @PostMapping // Добавление нового фильма
     public Film createFilm(@RequestBody Film film) {
-        validateFilm(film);
-        film.setId(++generateFilmId);
-        films.put(film.getId(), film);
-        log.debug("Добавлен новый фильм {}", film);
-        return film;
+        return filmService.createFilm(film);
     }
 
     @PutMapping // Обновление информации о фильме или создание нового
     public Film loadFilm(@RequestBody Film film) {
-        validateFilm(film);
-        Film saved = films.get(film.getId());
-        if (saved == null) {
-            log.debug("Фильм не найден {}", film);
-            throw new ValidationException("Фильм не найден");
-        } else {
-            films.put(saved.getId(), film);
-            log.debug("Фильм {} обновлен", film);
-        }
-        return film;
+        return filmService.loadFilm(film);
     }
 
     @GetMapping // Возвращает весь список фильмов
-        public List<Film> getAllFilms() {
-        return new ArrayList<>(films.values());
+    public List<Film> getAllFilms() {
+        return filmService.getAllFilms();
     }
 }

@@ -5,15 +5,19 @@ import org.junit.jupiter.api.Test;
 import ru.yandex.practicum.filmorate.controller.FilmController;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.service.FilmService;
+import ru.yandex.practicum.filmorate.service.FilmServiceImpl;
+import ru.yandex.practicum.filmorate.storage.InMemoryFilmStorage;
+
 import static ru.yandex.practicum.filmorate.validation.FilmValidation.validateFilm;
 
 
 import java.time.LocalDate;
 import java.util.List;
-
 public class FilmValidationTest {
-
-    FilmController filmController = new FilmController();
+    InMemoryFilmStorage inMemoryFilmStorage = new InMemoryFilmStorage();
+    FilmService filmService = new FilmServiceImpl(inMemoryFilmStorage);
+    FilmController filmController = new FilmController(filmService);
 
     @Test
     void emptyNameIsPassed() { // пустое название
