@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.controller.UserController;
+import ru.yandex.practicum.filmorate.exception.UserNotFoundException;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.InMemoryUserStorage;
 
@@ -28,9 +29,13 @@ public class UserServiceImpl implements UserService {
     }
 
     public User loadUser(User user) {
-        validateUser(user);
-        log.debug("Пользователь {} обновлен", user);
-        return inMemoryUserStorage.loadUser(user);
+        if (inMemoryUserStorage.getUsers().containsKey(user.getId())) {
+            validateUser(user);
+            log.debug("Пользователь {} обновлен", user);
+            return inMemoryUserStorage.loadUser(user);
+        } else {
+            throw new UserNotFoundException(String.format("Пользователь с указанным ID = \"%d\\ не найден", user.getId()));
+        }
     }
 
     public List<User> getAllUsers() {
@@ -41,7 +46,7 @@ public class UserServiceImpl implements UserService {
         if (inMemoryUserStorage.getUsers().containsKey(userId)) {
             return inMemoryUserStorage.getUsers().get(userId);
         } else {
-            throw new RuntimeException("Пользователь не найден");
+            throw new UserNotFoundException(String.format("Пользователь с указанным ID = \"%d\\ не найден", userId));
         }
     }
 
@@ -55,18 +60,15 @@ public class UserServiceImpl implements UserService {
     }
 
     public User addFriends(Integer userId, Integer userFriendId) {
-        if (userFriendId < 1) {
-            throw new RuntimeException("Некорректное значение ID пользователя");
+        if (inMemoryUserStorage.getUsers().containsKey(userId)) {
+            if (userFriendId > 0) {
+                    inMemoryUserStorage.getUsers().get(userId).getFriends().add(userFriendId);
+                    inMemoryUserStorage.getUsers().get(userFriendId).getFriends().add(userId);
+                    log.debug("Пользователь {} добавлен в друзья пользователя {}", userFriendId, userId);
+                    return inMemoryUserStorage.getUsers().get(userId);
+                }
         }
-        if (inMemoryUserStorage.getUsers().get(userId).getFriends().contains(userFriendId)) {
-            System.out.println("Пользователь уже добавлен в список друзей");   // exception
-            log.debug("Пользователь {} уже добавлен в список друзей {}", userFriendId, userId);
-        } else {
-            inMemoryUserStorage.getUsers().get(userId).getFriends().add(userFriendId);
-            inMemoryUserStorage.getUsers().get(userFriendId).getFriends().add(userId);
-            log.debug("Пользователь {} добавлен в друзья пользователя {}", userFriendId, userId);
-        }
-        return inMemoryUserStorage.getUsers().get(userId);
+        throw new UserNotFoundException(String.format("Пользователь с указанным ID = \"%d\\ не найден", userId));
     }
 
     public List<User> getAllFriendsOfUser(Integer userId) {

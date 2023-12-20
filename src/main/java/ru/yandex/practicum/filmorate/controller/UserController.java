@@ -23,7 +23,7 @@ public class UserController {
         return userService.loadUser(user);
     }
 
-    @GetMapping // Возвращает весь список фильмов
+    @GetMapping // Возвращает весь список пользователей
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
