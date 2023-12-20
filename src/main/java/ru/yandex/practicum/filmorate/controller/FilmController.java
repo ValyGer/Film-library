@@ -28,4 +28,25 @@ public class FilmController {
     public List<Film> getAllFilms() {
         return filmService.getAllFilms();
     }
+
+    @GetMapping("/{id}") // Возвращает фильм по id
+    public Film getFilmById(@PathVariable("id") Integer filmId) {
+        return filmService.getFilmById(filmId);
+    }
+
+    @PutMapping("/{id}/like/{userId}") // Добавление лайка к фильму пользователем
+    public Film addLike(@PathVariable("id") Integer filmId, @PathVariable("userId") Integer userId) {
+        return filmService.addLike(filmId, userId);
+    }
+
+    @DeleteMapping("/{id}/like/{userId}") // Удаление лайка у фильма пользователем
+    public Film deleteLike(@PathVariable("id") Integer filmId, @PathVariable("userId") Integer userId) {
+        return filmService.deleteLike(filmId, userId);
+    }
+
+    @GetMapping("/popular") // Получение списка популярных фильмов
+    public List<Film> findPopularFilms(@RequestParam(value = "count", defaultValue = "10", required = false) String count) {
+        return filmService.findPopularFilms(count);
+    }
+
 }

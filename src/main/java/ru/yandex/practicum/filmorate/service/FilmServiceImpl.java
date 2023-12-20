@@ -9,6 +9,7 @@ import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.storage.InMemoryFilmStorage;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static ru.yandex.practicum.filmorate.validation.FilmValidation.validateFilm;
 
@@ -32,5 +33,29 @@ public class FilmServiceImpl implements FilmService {
 
     public List<Film> getAllFilms() {
         return inMemoryFilmStorage.getAllFilms();
+    }
+
+    public Film addLike(Integer filmId, Integer userId) {
+        inMemoryFilmStorage.getFilms().get(filmId).getLikes().add(userId);
+        return inMemoryFilmStorage.getFilms().get(filmId);
+    }
+
+    public Film deleteLike(Integer filmId, Integer userId) {
+        inMemoryFilmStorage.getFilms().get(filmId).getLikes().remove(userId);
+        return inMemoryFilmStorage.getFilms().get(filmId);
+    }
+
+    public List<Film> findPopularFilms(String count) {
+        return inMemoryFilmStorage.getAllFilms().stream()
+                .sorted(Film::compareTo)
+                .skip(0).limit(Long.parseLong(count)).collect(Collectors.toList());
+    }
+
+    public Film getFilmById(Integer filmId) {
+        if (inMemoryFilmStorage.getFilms().containsKey(filmId)) {
+            return inMemoryFilmStorage.getFilms().get(filmId);
+        } else {
+            throw new RuntimeException("Фильм не найден");
+        }
     }
 }
