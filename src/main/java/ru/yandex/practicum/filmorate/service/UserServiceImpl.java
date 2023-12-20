@@ -51,22 +51,22 @@ public class UserServiceImpl implements UserService {
     }
 
     public List<User> getCommonFriends(Integer userId, Integer userFriend) {
-         TreeSet<Integer> intersectionFriends = inMemoryUserStorage.getUsers().get(userId).getFriends().stream()
-                 .filter(s1 -> inMemoryUserStorage.getUsers().get(userFriend).getFriends().contains(s1))
-                 .collect(Collectors.toCollection(TreeSet::new));
-         return intersectionFriends.stream()
-                 .map(id -> inMemoryUserStorage.getUsers().get(id))
-                 .collect(Collectors.toCollection(ArrayList::new));
+        TreeSet<Integer> intersectionFriends = inMemoryUserStorage.getUsers().get(userId).getFriends().stream()
+                .filter(s1 -> inMemoryUserStorage.getUsers().get(userFriend).getFriends().contains(s1))
+                .collect(Collectors.toCollection(TreeSet::new));
+        return intersectionFriends.stream()
+                .map(id -> inMemoryUserStorage.getUsers().get(id))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public User addFriends(Integer userId, Integer userFriendId) {
         if (inMemoryUserStorage.getUsers().containsKey(userId)) {
             if (userFriendId > 0) {
-                    inMemoryUserStorage.getUsers().get(userId).getFriends().add(userFriendId);
-                    inMemoryUserStorage.getUsers().get(userFriendId).getFriends().add(userId);
-                    log.debug("Пользователь {} добавлен в друзья пользователя {}", userFriendId, userId);
-                    return inMemoryUserStorage.getUsers().get(userId);
-                }
+                inMemoryUserStorage.getUsers().get(userId).getFriends().add(userFriendId);
+                inMemoryUserStorage.getUsers().get(userFriendId).getFriends().add(userId);
+                log.debug("Пользователь {} добавлен в друзья пользователя {}", userFriendId, userId);
+                return inMemoryUserStorage.getUsers().get(userId);
+            }
         }
         throw new UserNotFoundException(String.format("Пользователь с указанным ID = \"%d\\ не найден", userId));
     }

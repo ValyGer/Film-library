@@ -8,30 +8,29 @@ import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.UserService;
 import ru.yandex.practicum.filmorate.service.UserServiceImpl;
 import ru.yandex.practicum.filmorate.storage.InMemoryUserStorage;
-import ru.yandex.practicum.filmorate.storage.UserStorage;
-
-import static ru.yandex.practicum.filmorate.validation.UserValidation.validateUser;
 
 import java.time.LocalDate;
 import java.util.List;
 
+import static ru.yandex.practicum.filmorate.validation.UserValidation.validateUser;
+
 public class UserValidationTest {
     InMemoryUserStorage inMemoryUserStorage = new InMemoryUserStorage();
-    UserService userService =  new UserServiceImpl(inMemoryUserStorage);
+    UserService userService = new UserServiceImpl(inMemoryUserStorage);
     UserController userController = new UserController(userService);
 
     @Test
     void invalidEmailMissingCharacterAt() { // в мэйле отсутствует @
         User user = new User("mail.ru", "Login", "Nike Name", LocalDate.of(1986, 10, 25));
         Assertions.assertThrows(ValidationException.class, () ->
-                        validateUser(user), "Email не содержат символ @");
+                validateUser(user), "Email не содержат символ @");
     }
 
     @Test
     void blankEmail() { // незаполнен мэйл
         User user = new User("", "Login", "Nike Name", LocalDate.of(1986, 10, 25));
         Assertions.assertThrows(ValidationException.class, () ->
-            validateUser(user), "Email пустой");
+                validateUser(user), "Email пустой");
     }
 
     @Test
@@ -45,7 +44,7 @@ public class UserValidationTest {
     void replacingTheNameWithLogin() { //замена имени логином
         User user = new User("mail@mail.ru", "Login", "", LocalDate.of(1986, 10, 25));
         userController.createUser(user);
-        Assertions.assertEquals("Login", user.getName(),"Имя должно быть заменено логином");
+        Assertions.assertEquals("Login", user.getName(), "Имя должно быть заменено логином");
     }
 
     @Test
@@ -59,7 +58,7 @@ public class UserValidationTest {
     void emptyRequest() {  // пустой запрос
         User user = new User();
         Assertions.assertThrows(ValidationException.class, () ->
-            validateUser(user), "Передается пустой запрос");
+                validateUser(user), "Передается пустой запрос");
     }
 
     @Test

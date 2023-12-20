@@ -9,11 +9,11 @@ import ru.yandex.practicum.filmorate.service.FilmService;
 import ru.yandex.practicum.filmorate.service.FilmServiceImpl;
 import ru.yandex.practicum.filmorate.storage.InMemoryFilmStorage;
 
-import static ru.yandex.practicum.filmorate.validation.FilmValidation.validateFilm;
-
-
 import java.time.LocalDate;
 import java.util.List;
+
+import static ru.yandex.practicum.filmorate.validation.FilmValidation.validateFilm;
+
 public class FilmValidationTest {
     InMemoryFilmStorage inMemoryFilmStorage = new InMemoryFilmStorage();
     FilmService filmService = new FilmServiceImpl(inMemoryFilmStorage);

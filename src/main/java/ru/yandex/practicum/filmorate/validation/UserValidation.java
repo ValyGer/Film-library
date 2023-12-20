@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 public class UserValidation {
 
-    private static final  Logger log = LoggerFactory.getLogger(UserValidation.class);
+    private static final Logger log = LoggerFactory.getLogger(UserValidation.class);
 
     public static void validateUser(User user) {
         if (user != null) {
