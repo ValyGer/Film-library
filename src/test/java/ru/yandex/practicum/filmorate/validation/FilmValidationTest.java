@@ -19,16 +19,16 @@ public class FilmValidationTest {
     private final FilmService filmService = new FilmServiceImpl(inMemoryFilmStorage);
     private final FilmController filmController = new FilmController(filmService);
 
-    @Test
-    void emptyNameIsPassed() { // пустое название
+    @Test // пустое название
+    void emptyNameIsPassed() {
         Film film = new Film("", "adipisicing",
                 LocalDate.of(1965, 3, 25), 100L);
         Assertions.assertThrows(ValidationException.class, () ->
                 validateFilm(film), "Передано пустое название");
     }
 
-    @Test
-    void exceedingMaximumNumberOfCharactersInTheDescription() { // описание более 200 символов
+    @Test // описание более 200 символов
+    void exceedingMaximumNumberOfCharactersInTheDescription() {
         Film film = new Film("File name", "Пятеро друзей ( комик-группа «Шарло»), приезжают в город " +
                 "Бризуль. Здесь они хотят разыскать господина Огюста Куглова, который задолжал им деньги, а именно 20 " +
                 "миллионов. о Куглов, который за время «своего отсутствия», стал кандидатом Коломбани.",
@@ -37,31 +37,31 @@ public class FilmValidationTest {
                 validateFilm(film), "Передано описание более 200 символов");
     }
 
-    @Test
-    void yearOfReleaseIsLessThanToday() { //  Дата выпуска указана раньше чем был выпущен первый фильм
+    @Test //  Дата выпуска указана раньше чем был выпущен первый фильм
+    void yearOfReleaseIsLessThanToday() {
         Film film = new Film("File name", "adipisicing",
                 LocalDate.of(1765, 3, 25), 100L);
         Assertions.assertThrows(ValidationException.class, () ->
                 validateFilm(film), "Неверная дата релиза");
     }
 
-    @Test
-    void durationIsLessThanZero() { // Продолжительность фильма меньше нуля
+    @Test // Продолжительность фильма меньше нуля
+    void durationIsLessThanZero() {
         Film film = new Film("File name", "adipisicing",
                 LocalDate.of(1965, 3, 25), -100L);
         Assertions.assertThrows(ValidationException.class, () ->
                 validateFilm(film), "Длительность отрицательная");
     }
 
-    @Test
-    void emptyRequest() {  // Пустой запрос
+    @Test // Пустой запрос
+    void emptyRequest() {
         Film film = new Film();
         Assertions.assertThrows(ValidationException.class, () ->
                 validateFilm(film), "Передается пустой запрос");
     }
 
-    @Test
-    void addNewFilmSuccessful() { // Успешное добавление нового фильма
+    @Test // Успешное добавление нового фильма
+    void addNewFilmSuccessful() {
         Film film = new Film("Name of Film", "adipisicing",
                 LocalDate.of(1965, 3, 25), 1000L);
         Film film1 = filmController.createFilm(film);
@@ -71,8 +71,8 @@ public class FilmValidationTest {
         Assertions.assertEquals(film1.getDuration(), film.getDuration(), "Некорректная продолжительность");
     }
 
-    @Test
-    void updatingMovieFromList() { // Обновление фильма из списка
+    @Test // Обновление фильма из списка
+    void updatingMovieFromList() {
         Film film = new Film("Name of Film", "adipisicing",
                 LocalDate.of(1965, 3, 25), 1000L);
         filmController.createFilm(film);
@@ -86,8 +86,8 @@ public class FilmValidationTest {
         Assertions.assertEquals(film2.getDuration(), film1.getDuration(), "Не изменена продолжительность");
     }
 
-    @Test
-    void getAllFilms() { // Получение списка всех фильмов
+    @Test // Получение списка всех фильмов
+    void getAllFilms() {
         Film film = new Film("Name of Film", "adipisicing",
                 LocalDate.of(1965, 3, 25), 1000L);
         filmController.createFilm(film);
