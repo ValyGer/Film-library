@@ -62,7 +62,7 @@ public class UserValidationTest {
     }
 
     @Test
-    void addNewUserSuccessful() {
+    void addNewUserSuccessful() { // Успешное добавление пользователя
         User user = new User("mail@mail.ru", "Login", "Nike Name",
                 LocalDate.of(1994, 10, 25));
         User user1 = userController.createUser(user);
@@ -73,7 +73,7 @@ public class UserValidationTest {
     }
 
     @Test
-    void updatingUserFromList() {
+    void updatingUserFromList() { //Обновление пользователя из списка
         User user = new User("mail@mail.ru", "Login", "Nike Name",
                 LocalDate.of(1994, 10, 25));
         userController.createUser(user);
@@ -87,7 +87,7 @@ public class UserValidationTest {
     }
 
     @Test
-    void getAllUsers() {
+    void getAllUsers() {  // Получение списка всех пользователей
         User user = new User("mail@mail.ru", "Login", "Nike Name",
                 LocalDate.of(1994, 10, 25));
         userController.createUser(user);

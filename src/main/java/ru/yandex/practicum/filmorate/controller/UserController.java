@@ -43,12 +43,12 @@ public class UserController {
         return userService.getAllFriendsOfUser(userId);
     }
 
-    @GetMapping("/{id}/friends/common/{otherId}")
+    @GetMapping("/{id}/friends/common/{otherId}") // Получение списка общих друзей у двух пользователей
     public List<User> getCommonFriends(@PathVariable("id") Integer userId, @PathVariable("otherId") Integer userFriend) {
         return userService.getCommonFriends(userId, userFriend);
     }
 
-    @DeleteMapping("/{id}/friends/{friendId}")
+    @DeleteMapping("/{id}/friends/{friendId}") // Удаление пользователя из друзей
     public User deleteFriendFromSet(@PathVariable("id") Integer userId, @PathVariable("friendId") Integer userFriend) {
         return userService.deleteFriendFromSet(userId, userFriend);
     }

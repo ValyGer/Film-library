@@ -20,12 +20,14 @@ public class FilmServiceImpl implements FilmService {
     private static final Logger log = LoggerFactory.getLogger(FilmController.class);
     private final InMemoryFilmStorage inMemoryFilmStorage;
 
+    // Создание нового объекта фильма
     public Film createFilm(Film film) {
         validateFilm(film);
         log.debug("Добавлен новый фильм {}", film);
         return inMemoryFilmStorage.createFilm(film);
     }
 
+    // Обновление существующего объекта фильма
     public Film loadFilm(Film film) {
         if (inMemoryFilmStorage.getFilms().containsKey(film.getId())) {
             validateFilm(film);
@@ -36,15 +38,18 @@ public class FilmServiceImpl implements FilmService {
         }
     }
 
+    // Получение списка фильмов
     public List<Film> getAllFilms() {
         return inMemoryFilmStorage.getAllFilms();
     }
 
+    // Добавление фильму лайка
     public Film addLike(Integer filmId, Integer userId) {
         inMemoryFilmStorage.getFilms().get(filmId).getLikes().add(userId);
         return inMemoryFilmStorage.getFilms().get(filmId);
     }
 
+    // Удаление лайка у фильма
     public Film deleteLike(Integer filmId, Integer userId) {
         if (inMemoryFilmStorage.getFilms().containsKey(filmId)) {
             if (userId > 0) {
@@ -56,12 +61,14 @@ public class FilmServiceImpl implements FilmService {
         throw new FilmNotFoundException(String.format("Фильм с указанным ID = \"%d\\ не найден", filmId));
     }
 
+    // Получение списка популярных фильмов, задаем количество
     public List<Film> findPopularFilms(String count) {
         return inMemoryFilmStorage.getAllFilms().stream()
                 .sorted(Film::compareTo)
                 .skip(0).limit(Long.parseLong(count)).collect(Collectors.toList());
     }
 
+    // Получение фильма по ID
     public Film getFilmById(Integer filmId) {
         if (inMemoryFilmStorage.getFilms().containsKey(filmId)) {
             return inMemoryFilmStorage.getFilms().get(filmId);

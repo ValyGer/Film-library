@@ -22,12 +22,14 @@ public class UserServiceImpl implements UserService {
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
     private final InMemoryUserStorage inMemoryUserStorage;
 
+    // Создание нового объекта пользователя
     public User createUser(User user) {
         validateUser(user);
         log.debug("Добавлен новый пользователь {}", user);
         return inMemoryUserStorage.createUser(user);
     }
 
+    // Обновление существующего объекта пользователя
     public User loadUser(User user) {
         if (inMemoryUserStorage.getUsers().containsKey(user.getId())) {
             validateUser(user);
@@ -38,10 +40,12 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    // Получение списка пользователей
     public List<User> getAllUsers() {
         return inMemoryUserStorage.getAllUsers();
     }
 
+    // Получение пользователя по ID
     public User findUserById(Integer userId) {
         if (inMemoryUserStorage.getUsers().containsKey(userId)) {
             return inMemoryUserStorage.getUsers().get(userId);
@@ -50,6 +54,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    // Получение списка общих друзей пользователей
     public List<User> getCommonFriends(Integer userId, Integer userFriend) {
         TreeSet<Integer> intersectionFriends = inMemoryUserStorage.getUsers().get(userId).getFriends().stream()
                 .filter(s1 -> inMemoryUserStorage.getUsers().get(userFriend).getFriends().contains(s1))
@@ -59,6 +64,7 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    // Добавление пользователя в друзья
     public User addFriends(Integer userId, Integer userFriendId) {
         if (inMemoryUserStorage.getUsers().containsKey(userId)) {
             if (userFriendId > 0) {
@@ -71,12 +77,14 @@ public class UserServiceImpl implements UserService {
         throw new UserNotFoundException(String.format("Пользователь с указанным ID = \"%d\\ не найден", userId));
     }
 
+    // Получение списка друзей пользователя
     public List<User> getAllFriendsOfUser(Integer userId) {
         return inMemoryUserStorage.getUsers().get(userId).getFriends().stream()
                 .map(id -> inMemoryUserStorage.getUsers().get(id))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    // Удаление пользователя из друзей
     public User deleteFriendFromSet(Integer userId, Integer userFriend) {
         inMemoryUserStorage.getUsers().get(userId).getFriends().remove(userFriend);
         return inMemoryUserStorage.getUsers().get(userId);

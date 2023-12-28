@@ -15,12 +15,14 @@ public class InMemoryFilmStorage implements FilmStorage {
     private final HashMap<Integer, Film> films = new HashMap<>();
     private static int generateFilmId = 0;
 
+    // Создание нового фильма
     public Film createFilm(Film film) {
         film.setId(++generateFilmId);
         films.put(film.getId(), film);
         return film;
     }
 
+    // Обновление существующего фильма
     public Film loadFilm(Film film) {
         Film saved = films.get(film.getId());
         if (saved == null) {
@@ -31,6 +33,7 @@ public class InMemoryFilmStorage implements FilmStorage {
         return film;
     }
 
+    // Получение списка всех фильмов
     public List<Film> getAllFilms() {
         return new ArrayList<>(films.values());
     }

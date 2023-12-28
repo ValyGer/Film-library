@@ -17,6 +17,7 @@ public class InMemoryUserStorage implements UserStorage {
     private final HashMap<Integer, User> users = new HashMap<>();
     private static int generateUserId = 0;
 
+    // Добавление нового пользователя
     public User createUser(User user) {
         validateUser(user);
         user.setId(++generateUserId);
@@ -24,6 +25,7 @@ public class InMemoryUserStorage implements UserStorage {
         return user;
     }
 
+    // Обновление существующего пользователя
     public User loadUser(User user) {
         validateUser(user);
         User saved = users.get(user.getId());
@@ -35,6 +37,7 @@ public class InMemoryUserStorage implements UserStorage {
         return user;
     }
 
+    // Получение списка пользователей
     public List<User> getAllUsers() {
         return new ArrayList<>(users.values());
     }

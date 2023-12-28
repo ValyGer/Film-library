@@ -38,7 +38,7 @@ public class FilmValidationTest {
     }
 
     @Test
-    void yearOfReleaseIsLlessThantoday() {
+    void yearOfReleaseIsLessThanToday() { //  Дата выпуска указана раньше чем был выпущен первый фильм
         Film film = new Film("File name", "adipisicing",
                 LocalDate.of(1765, 3, 25), 100L);
         Assertions.assertThrows(ValidationException.class, () ->
@@ -46,7 +46,7 @@ public class FilmValidationTest {
     }
 
     @Test
-    void durationIsLessThanZero() {
+    void durationIsLessThanZero() { // Продолжительность фильма меньше нуля
         Film film = new Film("File name", "adipisicing",
                 LocalDate.of(1965, 3, 25), -100L);
         Assertions.assertThrows(ValidationException.class, () ->
@@ -54,14 +54,14 @@ public class FilmValidationTest {
     }
 
     @Test
-    void emptyRequest() {  // пустой запрос
+    void emptyRequest() {  // Пустой запрос
         Film film = new Film();
         Assertions.assertThrows(ValidationException.class, () ->
                 validateFilm(film), "Передается пустой запрос");
     }
 
     @Test
-    void addNewFilmSuccessful() {
+    void addNewFilmSuccessful() { // Успешное добавление нового фильма
         Film film = new Film("Name of Film", "adipisicing",
                 LocalDate.of(1965, 3, 25), 1000L);
         Film film1 = filmController.createFilm(film);
@@ -72,7 +72,7 @@ public class FilmValidationTest {
     }
 
     @Test
-    void updatingMovieFromList() {
+    void updatingMovieFromList() { // Обновление фильма из списка
         Film film = new Film("Name of Film", "adipisicing",
                 LocalDate.of(1965, 3, 25), 1000L);
         filmController.createFilm(film);
@@ -87,7 +87,7 @@ public class FilmValidationTest {
     }
 
     @Test
-    void getAllFilms() {
+    void getAllFilms() { // Получение списка всех фильмов
         Film film = new Film("Name of Film", "adipisicing",
                 LocalDate.of(1965, 3, 25), 1000L);
         filmController.createFilm(film);
