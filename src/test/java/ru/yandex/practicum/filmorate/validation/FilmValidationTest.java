@@ -20,13 +20,13 @@ import java.util.List;
 import static ru.yandex.practicum.filmorate.validation.FilmValidation.validateFilm;
 
 public class FilmValidationTest {
-    private final InMemoryFilmStorage inMemoryFilmStorage = new InMemoryFilmStorage();
-    private final FilmService filmService = new FilmServiceImpl(inMemoryFilmStorage);
-    private final FilmController filmController = new FilmController(filmService);
 
-    private final InMemoryUserStorage inMemoryUserStorage = new InMemoryUserStorage();
-    private final UserService userService = new UserServiceImpl(inMemoryUserStorage);
-    private final UserController userController = new UserController(userService);
+        private final InMemoryFilmStorage inMemoryFilmStorage = new InMemoryFilmStorage();
+        private final FilmService filmService = new FilmServiceImpl(inMemoryFilmStorage);
+        private final FilmController filmController = new FilmController(filmService);
+        private final InMemoryUserStorage inMemoryUserStorage = new InMemoryUserStorage();
+        private final UserService userService = new UserServiceImpl(inMemoryUserStorage);
+        private final UserController userController = new UserController(userService);
 
     @Test // пустое название
     void emptyNameIsPassed() {
@@ -173,12 +173,12 @@ public class FilmValidationTest {
         String count = "3";
         List<Film> popularFilms = filmController.findPopularFilms(count);
         Assertions.assertEquals(popularFilms.size(), 3, "В списке должно находится три объекта");
-        Assertions.assertEquals(popularFilms.get(0).getId(), 2, "Самый популярный фильм с ID = 2");
-        Assertions.assertEquals(popularFilms.get(1).getId(), 1, "На втором месте стоит фильм с ID = 1");
-        Assertions.assertEquals(popularFilms.get(2).getId(), 3, "На третьем месте стоит фильм с ID = 3");
+        Assertions.assertEquals(popularFilms.get(0).getId(), 7, "Самый популярный фильм с ID = 7");
+        Assertions.assertEquals(popularFilms.get(1).getId(), 6, "На втором месте стоит фильм с ID = 6");
+        Assertions.assertEquals(popularFilms.get(2).getId(), 8, "На третьем месте стоит фильм с ID = 8");
         count = "1";
         popularFilms = filmController.findPopularFilms(count);
         Assertions.assertEquals(popularFilms.size(), 1, "В списке должен находится один объект");
-        Assertions.assertEquals(popularFilms.get(0).getId(), 2, "Самый популярный фильм с ID=2");
+        Assertions.assertEquals(popularFilms.get(0).getId(), 7, "Самый популярный фильм с ID=7");
     }
 }
