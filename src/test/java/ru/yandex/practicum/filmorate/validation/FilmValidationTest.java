@@ -170,15 +170,15 @@ public class FilmValidationTest {
         filmController.addLike(film2.getId(), user2.getId());
         filmController.addLike(film2.getId(), user3.getId());
         filmController.addLike(film3.getId(), user2.getId());
-        String count = "";
+        String count = "3";
         List<Film> popularFilms = filmController.findPopularFilms(count);
         Assertions.assertEquals(popularFilms.size(), 3, "В списке должно находится три объекта");
-        Assertions.assertEquals(popularFilms.get(0).getId(), 1, "Самый популярный фильм с ID = 1");
-        Assertions.assertEquals(popularFilms.get(1).getId(), 0, "На втором месте стоит фильм с ID = 0");
-        Assertions.assertEquals(popularFilms.get(2).getId(), 2, "На третьем месте стоит фильм с ID = 2");
+        Assertions.assertEquals(popularFilms.get(0).getId(), 2, "Самый популярный фильм с ID = 2");
+        Assertions.assertEquals(popularFilms.get(1).getId(), 1, "На втором месте стоит фильм с ID = 1");
+        Assertions.assertEquals(popularFilms.get(2).getId(), 3, "На третьем месте стоит фильм с ID = 3");
         count = "1";
         popularFilms = filmController.findPopularFilms(count);
         Assertions.assertEquals(popularFilms.size(), 1, "В списке должен находится один объект");
-        Assertions.assertEquals(popularFilms.get(0).getId(), 1, "Самый популярный фильм с ID=1");
+        Assertions.assertEquals(popularFilms.get(0).getId(), 2, "Самый популярный фильм с ID=2");
     }
 }
