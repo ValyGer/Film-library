@@ -1,6 +1,6 @@
 package ru.yandex.practicum.filmorate.service;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -15,10 +15,10 @@ import java.util.stream.Collectors;
 import static ru.yandex.practicum.filmorate.validation.FilmValidation.validateFilm;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class FilmServiceImpl implements FilmService {
     private static final Logger log = LoggerFactory.getLogger(FilmController.class);
-    private InMemoryFilmStorage inMemoryFilmStorage;
+    private final InMemoryFilmStorage inMemoryFilmStorage;
 
     public Film createFilm(Film film) {
         validateFilm(film);

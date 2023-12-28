@@ -1,6 +1,6 @@
 package ru.yandex.practicum.filmorate.service;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -17,10 +17,10 @@ import java.util.stream.Collectors;
 import static ru.yandex.practicum.filmorate.validation.UserValidation.validateUser;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
-    private InMemoryUserStorage inMemoryUserStorage;
+    private final InMemoryUserStorage inMemoryUserStorage;
 
     public User createUser(User user) {
         validateUser(user);

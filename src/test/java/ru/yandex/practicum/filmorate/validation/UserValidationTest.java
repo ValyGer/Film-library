@@ -15,9 +15,9 @@ import java.util.List;
 import static ru.yandex.practicum.filmorate.validation.UserValidation.validateUser;
 
 public class UserValidationTest {
-    InMemoryUserStorage inMemoryUserStorage = new InMemoryUserStorage();
-    UserService userService = new UserServiceImpl(inMemoryUserStorage);
-    UserController userController = new UserController(userService);
+    private final InMemoryUserStorage inMemoryUserStorage = new InMemoryUserStorage();
+    private final UserService userService = new UserServiceImpl(inMemoryUserStorage);
+    private final UserController userController = new UserController(userService);
 
     @Test
     void invalidEmailMissingCharacterAt() { // в мэйле отсутствует @

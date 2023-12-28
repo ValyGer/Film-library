@@ -15,9 +15,9 @@ import java.util.List;
 import static ru.yandex.practicum.filmorate.validation.FilmValidation.validateFilm;
 
 public class FilmValidationTest {
-    InMemoryFilmStorage inMemoryFilmStorage = new InMemoryFilmStorage();
-    FilmService filmService = new FilmServiceImpl(inMemoryFilmStorage);
-    FilmController filmController = new FilmController(filmService);
+    private final InMemoryFilmStorage inMemoryFilmStorage = new InMemoryFilmStorage();
+    private final FilmService filmService = new FilmServiceImpl(inMemoryFilmStorage);
+    private final FilmController filmController = new FilmController(filmService);
 
     @Test
     void emptyNameIsPassed() { // пустое название
