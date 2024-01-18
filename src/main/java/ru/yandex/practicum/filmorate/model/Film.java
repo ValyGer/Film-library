@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -17,6 +18,9 @@ public class Film implements Comparable<Film> {
     private LocalDate releaseDate; // дата выхода фильма
     private Duration duration; //продолжительность фильма
     private Set<Integer> likes = new TreeSet<>();  // список лайков
+    private Rating rating; // рейтинг фильма
+    private Set<Genre> genres = new HashSet<>(); // жанры фильма
+
 
     public Film(String name, String description, LocalDate releaseDate, Long second) {
         this.name = name;
