@@ -8,6 +8,7 @@ import ru.yandex.practicum.filmorate.controller.UserController;
 import ru.yandex.practicum.filmorate.exception.UserNotFoundException;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.InMemoryUserStorage;
+import ru.yandex.practicum.filmorate.storage.dao.UserDbStorage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +22,13 @@ import static ru.yandex.practicum.filmorate.validation.UserValidation.validateUs
 public class UserServiceImpl implements UserService {
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
     private final InMemoryUserStorage inMemoryUserStorage;
+    private final UserDbStorage userDbStorage;
 
     // Создание нового объекта пользователя
     public User createUser(User user) {
         validateUser(user);
         log.debug("Добавлен новый пользователь {}", user);
-        return inMemoryUserStorage.createUser(user);
+        return userDbStorage.createUser(user);
     }
 
     // Обновление существующего объекта пользователя
@@ -47,11 +49,7 @@ public class UserServiceImpl implements UserService {
 
     // Получение пользователя по ID
     public User findUserById(Integer userId) {
-        if (inMemoryUserStorage.getUsers().containsKey(userId)) {
-            return inMemoryUserStorage.getUsers().get(userId);
-        } else {
-            throw new UserNotFoundException(String.format("Пользователь с указанным ID = \"%d\\ не найден", userId));
-        }
+        return userDbStorage.findUserById(userId);
     }
 
     // Получение списка общих друзей пользователей
