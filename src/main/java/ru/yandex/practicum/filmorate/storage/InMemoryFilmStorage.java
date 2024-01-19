@@ -11,7 +11,7 @@ import java.util.List;
 
 @Getter
 @Component
-public class InMemoryFilmStorage implements FilmStorage {
+public class InMemoryFilmStorage {
     private final HashMap<Integer, Film> films = new HashMap<>();
     private static int generateFilmId = 0;
 

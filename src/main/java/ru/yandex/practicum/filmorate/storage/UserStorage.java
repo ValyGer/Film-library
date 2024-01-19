@@ -9,11 +9,11 @@ public interface UserStorage {
 
     User createUser(User user);
 
-    User updateUser(User user);
+    User loadUser(User user);
 
-    User findUserById(int id);
+    User getUserById(Integer userId);
 
-    void deleteUser(int id);
+    void deleteUser(Integer userId);
 
     List<User> getAllUsers();
 }

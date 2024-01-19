@@ -33,24 +33,22 @@ public class UserServiceImpl implements UserService {
 
     // Обновление существующего объекта пользователя
     public User loadUser(User user) {
-        if (inMemoryUserStorage.getUsers().containsKey(user.getId())) {
             validateUser(user);
             log.debug("Пользователь {} обновлен", user);
-            return inMemoryUserStorage.loadUser(user);
-        } else {
-            throw new UserNotFoundException(String.format("Пользователь с указанным ID = \"%d\\ не найден", user.getId()));
-        }
+            return userDbStorage.loadUser(user);
     }
 
     // Получение списка пользователей
     public List<User> getAllUsers() {
-        return inMemoryUserStorage.getAllUsers();
+        return userDbStorage.getAllUsers();
     }
 
     // Получение пользователя по ID
     public User findUserById(Integer userId) {
-        return userDbStorage.findUserById(userId);
+        return userDbStorage.getUserById(userId);
     }
+
+    // друзья не доделаны!!!
 
     // Получение списка общих друзей пользователей
     public List<User> getCommonFriends(Integer userId, Integer userFriend) {

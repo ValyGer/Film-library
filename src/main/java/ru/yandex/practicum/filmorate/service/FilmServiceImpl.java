@@ -8,6 +8,7 @@ import ru.yandex.practicum.filmorate.controller.FilmController;
 import ru.yandex.practicum.filmorate.exception.FilmNotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.storage.InMemoryFilmStorage;
+import ru.yandex.practicum.filmorate.storage.dao.FilmDbStorage;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,13 +19,14 @@ import static ru.yandex.practicum.filmorate.validation.FilmValidation.validateFi
 @RequiredArgsConstructor
 public class FilmServiceImpl implements FilmService {
     private static final Logger log = LoggerFactory.getLogger(FilmController.class);
+    private final FilmDbStorage filmDbStorage;
     private final InMemoryFilmStorage inMemoryFilmStorage;
 
     // Создание нового объекта фильма
     public Film createFilm(Film film) {
         validateFilm(film);
         log.debug("Добавлен новый фильм {}", film);
-        return inMemoryFilmStorage.createFilm(film);
+        return filmDbStorage.createFilm(film);
     }
 
     // Обновление существующего объекта фильма

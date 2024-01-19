@@ -13,6 +13,7 @@ import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.UserStorage;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +25,6 @@ public class UserDbStorage implements UserStorage {
     private JdbcTemplate jdbcTemplate;
 
    public User createUser(User user) {
-       String sqlRequest = "INSERT INTO user (genre_id, genre_name)";
        SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate.getDataSource())
                .withTableName("users")
                .usingGeneratedKeyColumns("user_id");
@@ -37,29 +37,39 @@ public class UserDbStorage implements UserStorage {
        return user;
    }
 
-    public User updateUser(User user) {
-        return null;
+    public User loadUser(User user) {
+        getUserById(user.getId());
+        String sqlRequest = "UPDATE users SET email = ?, login = ?, user_name = ?, birthday = ? WHERE user_id = ?";
+        jdbcTemplate.update(sqlRequest, user.getEmail(), user.getLogin(), user.getName(), user.getBirthday(), user.getId());
+        return user;
     }
 
-    public User findUserById(int userId) {
+    public User getUserById(Integer userId) {
         String sqlRequest = "SELECT * FROM users WHERE user_id = ?";
         SqlRowSet rs = jdbcTemplate.queryForRowSet(sqlRequest, userId);
         if (rs.next()) {
-            return userMap(rs);
+            return userRowMapper(rs);
         } else {
             throw new UserNotFoundException(String.format("Пользователь с указанным ID = %d не найден", userId));
         }
     }
 
-    public void deleteUser(int id) {
-
-    }
-
     public List<User> getAllUsers() {
-       return null;
+        String sqlRequest = "SELECT * FROM users";
+        SqlRowSet rs = jdbcTemplate.queryForRowSet(sqlRequest);
+        List<User> users = new ArrayList<>();
+        while (rs.next()) {
+            users.add(userRowMapper(rs));
+        }
+        return users;
     }
 
-    private User userMap(SqlRowSet rs) {
+    public void deleteUser(Integer userId) {
+        String sqlRequest = "DELETE * FROM users WHERE user_id = ?";
+        jdbcTemplate.queryForRowSet(sqlRequest, userId);
+    }
+
+    private User userRowMapper(SqlRowSet rs) {
        return new User(rs.getInt("user_id"),
                 rs.getString("email"),
                 rs.getString("login"),
