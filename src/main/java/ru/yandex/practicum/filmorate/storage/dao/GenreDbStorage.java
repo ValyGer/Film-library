@@ -23,7 +23,7 @@ public class GenreDbStorage implements GenreStorage {
             throw new GenreNotFoundException("Передан пустой запрос");
         }
         String sqlRequest = "SELECT * FROM genres WHERE genre_id = ?";
-            return jdbcTemplate.query(sqlRequest, rs -> {
+        return jdbcTemplate.query(sqlRequest, rs -> {
             return new Genre(rs.getInt("genre_id"), rs.getString("genre_name"));
         }, genreId);
     }

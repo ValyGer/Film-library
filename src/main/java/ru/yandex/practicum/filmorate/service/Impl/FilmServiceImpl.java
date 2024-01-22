@@ -1,4 +1,4 @@
-package ru.yandex.practicum.filmorate.service;
+package ru.yandex.practicum.filmorate.service.Impl;
 
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.controller.FilmController;
 import ru.yandex.practicum.filmorate.exception.FilmNotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.storage.InMemoryFilmStorage;
+import ru.yandex.practicum.filmorate.service.FilmService;
+import ru.yandex.practicum.filmorate.storage.memory.InMemoryFilmStorage;
 import ru.yandex.practicum.filmorate.storage.dao.FilmDbStorage;
 
 import java.util.List;

@@ -5,7 +5,6 @@ import lombok.Getter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -20,7 +19,9 @@ import java.sql.SQLException;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Getter
 @Component
@@ -50,13 +51,13 @@ public class FilmDbStorage implements FilmStorage {
         deleteFilmGenresById(film.getId());
         if ((genres.isEmpty()) || (genres == null)) {
             return;
-        }  else {
+        } else {
             String sqlRequest = "INSERT INTO film_genre (film_id, genre_id) VALUES (?, ?)";
             jdbcTemplate.batchUpdate(sqlRequest, new BatchPreparedStatementSetter() {
                 @Override
                 public void setValues(PreparedStatement ps, int i) throws SQLException {
-                   ps.setInt(1, film.getId());
-                   ps.setInt(2, genres.get(i).getId());
+                    ps.setInt(1, film.getId());
+                    ps.setInt(2, genres.get(i).getId());
                 }
 
                 @Override
@@ -88,11 +89,11 @@ public class FilmDbStorage implements FilmStorage {
     // маппинг фильма
     private Film filmRowMapper(SqlRowSet rs) {
         return new Film(rs.getInt("film_id"), rs.getString("film_name"),
-            rs.getString("description"),
-            Duration.ofSeconds(rs.getInt("duration")),
-            LocalDate.parse(rs.getString("releaseData"), DateTimeFormatter.ofPattern("yyyy-MM-dd")),
-            new Rating(rs.getInt("rating_id"), rs.getString("rating_name")),
-            getGenresFilmById(rs.getInt("film_id")));
+                rs.getString("description"),
+                Duration.ofSeconds(rs.getInt("duration")),
+                LocalDate.parse(rs.getString("releaseData"), DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+                new Rating(rs.getInt("rating_id"), rs.getString("rating_name")),
+                getGenresFilmById(rs.getInt("film_id")));
     }
 
     // возвращаем список жанров для фильма с определенным id
@@ -137,12 +138,12 @@ public class FilmDbStorage implements FilmStorage {
                 "JOIN film_genres fg ON fg.film_id = f.film_id" +
                 "JOIN genres g ON g.genres_id = film_genres.genre_id";
         List<Film> films = jdbcTemplate.query(sqlRequest, (rs, rowNum) -> new Film(rs.getInt("film_id"),
-        rs.getString("film_name"),
-        rs.getString("description"),
-        Duration.ofSeconds(rs.getInt("duration")),
-        LocalDate.parse(rs.getString("releaseData")),
-        new Rating(rs.getInt("rating_id"), rs.getString("rating_name")),
-        addGenresOfFilm(rs.getInt("film_id"))));
+                rs.getString("film_name"),
+                rs.getString("description"),
+                Duration.ofSeconds(rs.getInt("duration")),
+                LocalDate.parse(rs.getString("releaseData")),
+                new Rating(rs.getInt("rating_id"), rs.getString("rating_name")),
+                addGenresOfFilm(rs.getInt("film_id"))));
         return films;
     }
 
