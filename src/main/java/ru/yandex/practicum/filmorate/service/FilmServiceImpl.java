@@ -29,15 +29,16 @@ public class FilmServiceImpl implements FilmService {
         return filmDbStorage.createFilm(film);
     }
 
+    // Получение фильма по ID
+    public Film getFilmById(Integer filmId) {
+        return filmDbStorage.getFilmById(filmId);
+    }
+
     // Обновление существующего объекта фильма
     public Film loadFilm(Film film) {
-        if (inMemoryFilmStorage.getFilms().containsKey(film.getId())) {
             validateFilm(film);
             log.debug("Фильм {} обновлен", film);
-            return inMemoryFilmStorage.loadFilm(film);
-        } else {
-            throw new FilmNotFoundException(String.format("Фильм с указанным ID = \"%d\\ не найден", film.getId()));
-        }
+            return filmDbStorage.loadFilm(film);
     }
 
     // Получение списка фильмов
@@ -68,14 +69,5 @@ public class FilmServiceImpl implements FilmService {
         return inMemoryFilmStorage.getAllFilms().stream()
                 .sorted(Film::compareTo)
                 .skip(0).limit(Long.parseLong(count)).collect(Collectors.toList());
-    }
-
-    // Получение фильма по ID
-    public Film getFilmById(Integer filmId) {
-        if (inMemoryFilmStorage.getFilms().containsKey(filmId)) {
-            return inMemoryFilmStorage.getFilms().get(filmId);
-        } else {
-            throw new FilmNotFoundException(String.format("Фильм с указанным ID = \"%d\\ не найден", filmId));
-        }
     }
 }

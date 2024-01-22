@@ -35,6 +35,16 @@ public class Film implements Comparable<Film> {
         this.duration = Duration.ofSeconds(second);
     }
 
+    public Film(int id, String name, String description, Duration duration, LocalDate releaseDate, Rating mpa, List<Genre> genres) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.releaseDate = releaseDate;
+        this.duration = duration;
+        this.mpa = mpa;
+        this.genres = genres;
+    }
+
     public Long getDuration() {
         return duration.toSeconds();
     }
