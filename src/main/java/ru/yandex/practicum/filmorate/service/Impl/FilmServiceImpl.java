@@ -44,31 +44,25 @@ public class FilmServiceImpl implements FilmService {
 
     // Получение списка фильмов
     public List<Film> getAllFilms() {
-        return inMemoryFilmStorage.getAllFilms();
+        return filmDbStorage.getAllFilms();
     }
 
     // Добавление фильму лайка
     public Film addLike(Integer filmId, Integer userId) {
-        inMemoryFilmStorage.getFilms().get(filmId).getLikes().add(userId);
-        return inMemoryFilmStorage.getFilms().get(filmId);
+        Film film = filmDbStorage.addLike(filmId, userId);
+        log.debug("Лайк пользователя {} удален из списка лайков фильма {}", userId, filmId);
+        return film;
     }
 
     // Удаление лайка у фильма
     public Film deleteLike(Integer filmId, Integer userId) {
-        if (inMemoryFilmStorage.getFilms().containsKey(filmId)) {
-            if (userId > 0) {
-                inMemoryFilmStorage.getFilms().get(filmId).getLikes().remove(userId);
-                log.debug("Лайк пользователя {} удален из списка лайков фильма {}", userId, filmId);
-                return inMemoryFilmStorage.getFilms().get(filmId);
-            }
-        }
-        throw new FilmNotFoundException(String.format("Фильм с указанным ID = \"%d\\ не найден", filmId));
+        Film film = filmDbStorage.deleteLike(filmId, userId);
+        log.debug("Лайк пользователя {} удален из списка лайков фильма {}", userId, filmId);
+        return film;
     }
 
     // Получение списка популярных фильмов, задаем количество
     public List<Film> findPopularFilms(String count) {
-        return inMemoryFilmStorage.getAllFilms().stream()
-                .sorted(Film::compareTo)
-                .skip(0).limit(Long.parseLong(count)).collect(Collectors.toList());
+        return filmDbStorage.findPopularFilms(count);
     }
 }

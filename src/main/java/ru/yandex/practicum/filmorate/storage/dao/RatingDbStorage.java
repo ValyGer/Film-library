@@ -2,6 +2,7 @@ package ru.yandex.practicum.filmorate.storage.dao;
 
 import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.exception.RatingNotFoundException;
 import ru.yandex.practicum.filmorate.model.Rating;
@@ -26,7 +27,16 @@ public class RatingDbStorage implements RatingStorage {
             throw new RatingNotFoundException("Передан пустой запрос");
         }
         String sqlRequest = "SELECT * FROM rating WHERE rating_id = ?";
-        return jdbcTemplate.queryForObject(sqlRequest, (rs, rowNum) ->
-                new Rating(rs.getInt("id"), rs.getString("name")), ratingId);
+        SqlRowSet rs = jdbcTemplate.queryForRowSet(sqlRequest, ratingId);
+        if (rs.next()) {
+            return ratingRowMapper(rs);
+        } else {
+            throw new RatingNotFoundException(String.format("Жанр с указанным ID = %d не найден", ratingId));
+        }
+    }
+
+    private Rating ratingRowMapper(SqlRowSet rs) {
+        return new Rating(rs.getInt("rating_id"),
+                rs.getString("rating_name"));
     }
 }

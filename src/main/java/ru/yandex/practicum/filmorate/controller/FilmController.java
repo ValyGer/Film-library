@@ -48,5 +48,4 @@ public class FilmController {
     public List<Film> findPopularFilms(@RequestParam(value = "count", defaultValue = "10", required = false) String count) {
         return filmService.findPopularFilms(count);
     }
-
 }
