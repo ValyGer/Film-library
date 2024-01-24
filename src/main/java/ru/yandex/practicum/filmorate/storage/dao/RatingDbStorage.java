@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class RatingDbStorage implements RatingStorage {
 
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     public List<Rating> getAllRating() {
         String sqlRequest = "SELECT * FROM rating";

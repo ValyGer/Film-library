@@ -69,9 +69,9 @@ public class FilmDbStorage implements FilmStorage {
     private Film filmRowMapper(SqlRowSet rs) {
         return new Film(rs.getInt("film_id"), rs.getString("film_name"),
                 rs.getString("description"),
-                Duration.ofSeconds(rs.getInt("duration")),
+                rs.getLong("duration"),
                 LocalDate.parse(rs.getString("releaseDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd")),
-                new Rating(rs.getInt("rating_id"), rs.getString("rating_name")),
+                rs.getInt("rating_id"),
                 genreService.getGenreForFilm(rs.getInt("film_id")));
     }
 
@@ -110,9 +110,9 @@ public class FilmDbStorage implements FilmStorage {
         List<Film> films = jdbcTemplate.query(sqlRequest, (rs, rowNum) -> new Film(rs.getInt("film_id"),
                 rs.getString("film_name"),
                 rs.getString("description"),
-                Duration.ofSeconds(rs.getInt("duration")),
+                rs.getLong("duration"),
                 LocalDate.parse(rs.getString("releaseDate")),
-                ratingService.getRatingById(rs.getInt("rating_id")),
+                rs.getInt("rating_id"),
                 genreService.getGenreForFilm(rs.getInt("film_id"))));
         return films;
     }

@@ -1,3 +1,5 @@
+package ru.yandex.practicum.filmorate.storage.dao;
+
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

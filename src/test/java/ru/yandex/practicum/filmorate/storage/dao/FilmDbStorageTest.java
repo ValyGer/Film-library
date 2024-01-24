@@ -1,8 +1,9 @@
+package ru.yandex.practicum.filmorate.storage.dao;
+
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.DirtiesContext;
@@ -14,10 +15,6 @@ import ru.yandex.practicum.filmorate.service.GenreService;
 import ru.yandex.practicum.filmorate.service.Impl.GenreServiceImpl;
 import ru.yandex.practicum.filmorate.service.Impl.RatingServiceImpl;
 import ru.yandex.practicum.filmorate.service.RatingService;
-import ru.yandex.practicum.filmorate.storage.dao.FilmDbStorage;
-import ru.yandex.practicum.filmorate.storage.dao.GenreDbStorage;
-import ru.yandex.practicum.filmorate.storage.dao.RatingDbStorage;
-import ru.yandex.practicum.filmorate.storage.dao.UserDbStorage;
 
 import java.time.LocalDate;
 import java.util.List;
