@@ -35,7 +35,7 @@ public class UserController {
 
     @PutMapping("/{id}/friends/{friendId}") // Добавление пользователя в друзья
     public User addFriends(@PathVariable("id") Integer userId, @PathVariable("friendId") Integer userFriendId) {
-        return userService.addFriends(userId, userFriendId);
+        return userService.addFriend(userId, userFriendId);
     }
 
     @GetMapping("/{userId}/friends") // Получение списка друзей пользователя
@@ -49,7 +49,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}/friends/{friendId}") // Удаление пользователя из друзей
-    public User deleteFriendFromSet(@PathVariable("id") Integer userId, @PathVariable("friendId") Integer userFriend) {
-        return userService.deleteFriendFromSet(userId, userFriend);
+    public User deleteFriend(@PathVariable("id") Integer userId, @PathVariable("friendId") Integer userFriend) {
+        return userService.deleteFriend(userId, userFriend);
     }
 }

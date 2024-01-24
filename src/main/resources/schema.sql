@@ -47,5 +47,6 @@ CREATE TABLE IF NOT EXISTS film_genres (
 -- таблица дружбы
 CREATE TABLE IF NOT EXISTS friendship_status (
   user_id integer REFERENCES users (user_id) ON DELETE RESTRICT ON UPDATE CASCADE,
-  friend_id integer REFERENCES users (user_id) ON DELETE RESTRICT ON UPDATE CASCADE
+  friend_id integer REFERENCES users (user_id) ON DELETE RESTRICT ON UPDATE CASCADE,
+  status boolean
 );

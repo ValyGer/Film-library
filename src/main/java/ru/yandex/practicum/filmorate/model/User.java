@@ -4,7 +4,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -14,7 +15,7 @@ public class User {
     private String login; // логин пользователя
     private String name; // имя для отображения
     private LocalDate birthday; // дата рождения
-    private Set<Integer> friends = new TreeSet<>();  // список друзей
+    private List<Integer> friends = new ArrayList<>();  // список друзей
 
     public User(String email, String login, String name, LocalDate birthday) {
         this.email = email;

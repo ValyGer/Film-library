@@ -5,14 +5,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.controller.FilmController;
-import ru.yandex.practicum.filmorate.exception.FilmNotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.service.FilmService;
-import ru.yandex.practicum.filmorate.storage.memory.InMemoryFilmStorage;
 import ru.yandex.practicum.filmorate.storage.dao.FilmDbStorage;
+import ru.yandex.practicum.filmorate.storage.memory.InMemoryFilmStorage;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static ru.yandex.practicum.filmorate.validation.FilmValidation.validateFilm;
 
@@ -37,9 +35,9 @@ public class FilmServiceImpl implements FilmService {
 
     // Обновление существующего объекта фильма
     public Film loadFilm(Film film) {
-            validateFilm(film);
-            log.debug("Фильм {} обновлен", film);
-            return filmDbStorage.loadFilm(film);
+        validateFilm(film);
+        log.debug("Фильм {} обновлен", film);
+        return filmDbStorage.loadFilm(film);
     }
 
     // Получение списка фильмов
