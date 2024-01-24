@@ -5,7 +5,10 @@ import lombok.NoArgsConstructor;
 
 import java.time.Duration;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 @Data
 @NoArgsConstructor
@@ -43,6 +46,15 @@ public class Film implements Comparable<Film> {
         this.duration = duration;
         this.mpa = mpa;
         this.genres = genres;
+    }
+
+    public Film(int id, String name, String description, Long duration, LocalDate releaseDate, Integer raitingId) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.releaseDate = releaseDate;
+        this.duration = Duration.ofSeconds(duration);
+        this.mpa = new Rating(raitingId, null);
     }
 
     public Film(int id, String name, String description, LocalDate releaseDate, Duration duration, Set<Integer> likes, Rating mpa, List<Genre> genres) {

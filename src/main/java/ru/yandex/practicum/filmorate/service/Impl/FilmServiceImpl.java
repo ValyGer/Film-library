@@ -8,7 +8,6 @@ import ru.yandex.practicum.filmorate.controller.FilmController;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.service.FilmService;
 import ru.yandex.practicum.filmorate.storage.dao.FilmDbStorage;
-import ru.yandex.practicum.filmorate.storage.memory.InMemoryFilmStorage;
 
 import java.util.List;
 
@@ -19,7 +18,6 @@ import static ru.yandex.practicum.filmorate.validation.FilmValidation.validateFi
 public class FilmServiceImpl implements FilmService {
     private static final Logger log = LoggerFactory.getLogger(FilmController.class);
     private final FilmDbStorage filmDbStorage;
-    private final InMemoryFilmStorage inMemoryFilmStorage;
 
     // Создание нового объекта фильма
     public Film createFilm(Film film) {

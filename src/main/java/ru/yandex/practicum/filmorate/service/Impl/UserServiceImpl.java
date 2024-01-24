@@ -8,7 +8,6 @@ import ru.yandex.practicum.filmorate.controller.UserController;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.UserService;
 import ru.yandex.practicum.filmorate.storage.dao.UserDbStorage;
-import ru.yandex.practicum.filmorate.storage.memory.InMemoryUserStorage;
 
 import java.util.List;
 
@@ -18,7 +17,6 @@ import static ru.yandex.practicum.filmorate.validation.UserValidation.validateUs
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
-    private final InMemoryUserStorage inMemoryUserStorage;
     private final UserDbStorage userDbStorage;
 
     // Создание нового объекта пользователя

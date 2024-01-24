@@ -43,8 +43,6 @@ public class FilmDbStorage implements FilmStorage {
         film.setMpa(ratingService.getRatingById(film.getMpa().getId()));
         if (film.getGenres() != null) {
             for (Genre genre : film.getGenres()) {
-                Integer id = genre.getId();
-                Genre genre1 = genreService.getGenreById(genre.getId());
                 genre.setName(genreService.getGenreById(genre.getId()).getName());
             }
             genreService.addGenreAtFilm(film);
@@ -126,7 +124,9 @@ public class FilmDbStorage implements FilmStorage {
         }
         String sqlRequest = "INSERT INTO film_likes (film_id, user_id) VALUES (?, ?)";
         if (jdbcTemplate.update(sqlRequest, filmId, userId) > 0) {
-            return getFilmById(filmId);
+            Film film = getFilmById(filmId);
+            film.getLikes().add(userId);
+            return film;
         } else {
             throw new FilmNotFoundException(String.format("Фильм с указанным ID = %d не найден", filmId));
         }
@@ -139,7 +139,9 @@ public class FilmDbStorage implements FilmStorage {
         }
         String sqlRequest = "DELETE FROM film_likes WHERE film_id = ? AND user_id = ?";
         if (jdbcTemplate.update(sqlRequest, filmId, userId) > 0) {
-            return getFilmById(filmId);
+            Film film = getFilmById(filmId);
+            film.getLikes().remove(userId);
+            return film;
         } else {
             throw new FilmNotFoundException(String.format("Фильм с указанным ID = %d не найден", filmId));
         }
