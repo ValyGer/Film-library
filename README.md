@@ -27,7 +27,7 @@ JOIN genres AS g ON fg.genre_id = g.genre_id
 order by g.genre_name; 
 </pre>
 
-_Получение списка фильмов, которым поставил лайк пользователь в имени которого первая буква "Д":_
+_Получение списка фильмов, которым поставил лайк пользователь. В имени пользователя первая буква "Д":_
 <pre>SELECT *
 FROM (SELECT f.film_name AS f_name, 
 			 u.user_name AS u_name 

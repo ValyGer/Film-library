@@ -3,6 +3,7 @@ package ru.yandex.practicum.filmorate.storage.dao;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -17,15 +18,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static ru.yandex.practicum.filmorate.validation.UserValidation.validateUser;
+
 @Getter
 @Component
 @Qualifier
 @AllArgsConstructor
 public class UserDbStorage implements UserStorage {
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     // создание пользователя
     public User createUser(User user) {
+        validateUser(user);
         SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate.getDataSource())
                 .withTableName("users")
                 .usingGeneratedKeyColumns("user_id");
@@ -70,8 +74,8 @@ public class UserDbStorage implements UserStorage {
 
     // удаление пользователя
     public void deleteUser(Integer userId) {
-        String sqlRequest = "DELETE * FROM users WHERE user_id = ?";
-        jdbcTemplate.queryForRowSet(sqlRequest, userId);
+        String sqlRequest = "DELETE FROM users WHERE user_id = ?";
+        jdbcTemplate.update(sqlRequest, userId);
     }
 
     // вспомогательный RowMapper для пользователя
