@@ -70,7 +70,7 @@ public class FilmDbStorage implements FilmStorage {
                 rs.getString("description"),
                 rs.getLong("duration"),
                 LocalDate.parse(rs.getString("releaseDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd")),
-                rs.getInt("rating_id"),
+                ratingService.getRatingById(rs.getInt("rating_id")),
                 genreService.getGenreForFilm(rs.getInt("film_id")));
     }
 
@@ -111,7 +111,7 @@ public class FilmDbStorage implements FilmStorage {
                 rs.getString("description"),
                 rs.getLong("duration"),
                 LocalDate.parse(rs.getString("releaseDate")),
-                rs.getInt("rating_id"),
+                ratingService.getRatingById(rs.getInt("rating_id")),
                 genreService.getGenreForFilm(rs.getInt("film_id"))));
         return films;
     }

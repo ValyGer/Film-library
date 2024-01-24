@@ -48,6 +48,16 @@ public class Film implements Comparable<Film> {
         this.genres = genres;
     }
 
+    public Film(int id, String name, String description, Long duration, LocalDate releaseDate, Rating mpa, List<Genre> genres) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.releaseDate = releaseDate;
+        this.duration = Duration.ofSeconds(duration);
+        this.mpa = mpa;
+        this.genres = genres;
+    }
+
     public Film(int id, String name, String description, Long duration, LocalDate releaseDate, Integer raitingId) {
         this.id = id;
         this.name = name;
