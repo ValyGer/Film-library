@@ -30,7 +30,7 @@ public class FilmDbStorage implements FilmStorage {
 
     // создание фильма
     public Film createFilm(Film film) {
-        SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate.getDataSource())
+        SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(Objects.requireNonNull(jdbcTemplate.getDataSource()))
                 .withTableName("films")
                 .usingGeneratedKeyColumns("film_id");
         Map<String, String> params = Map.of("film_name", film.getName(),

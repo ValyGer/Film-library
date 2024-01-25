@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static ru.yandex.practicum.filmorate.validation.UserValidation.validateUser;
 
@@ -29,7 +30,7 @@ public class UserDbStorage implements UserStorage {
     // создание пользователя
     public User createUser(User user) {
         validateUser(user);
-        SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate.getDataSource())
+        SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(Objects.requireNonNull(jdbcTemplate.getDataSource()))
                 .withTableName("users")
                 .usingGeneratedKeyColumns("user_id");
         Map<String, String> params = Map.of("email", user.getEmail(),
