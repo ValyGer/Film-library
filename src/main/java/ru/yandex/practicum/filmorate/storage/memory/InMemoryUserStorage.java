@@ -1,4 +1,4 @@
-package ru.yandex.practicum.filmorate.storage;
+package ru.yandex.practicum.filmorate.storage.memory;
 
 import lombok.Getter;
 import org.springframework.stereotype.Component;
@@ -13,7 +13,7 @@ import static ru.yandex.practicum.filmorate.validation.UserValidation.validateUs
 
 @Getter
 @Component
-public class InMemoryUserStorage implements UserStorage {
+public class InMemoryUserStorage {
     private final HashMap<Integer, User> users = new HashMap<>();
     private static int generateUserId = 0;
 

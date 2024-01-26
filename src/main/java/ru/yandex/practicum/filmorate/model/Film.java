@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -17,6 +19,9 @@ public class Film implements Comparable<Film> {
     private LocalDate releaseDate; // дата выхода фильма
     private Duration duration; //продолжительность фильма
     private Set<Integer> likes = new TreeSet<>();  // список лайков
+    private Rating mpa; // рейтинг фильма
+    private List<Genre> genres = new ArrayList<>(); // жанры фильма
+
 
     public Film(String name, String description, LocalDate releaseDate, Long second) {
         this.name = name;
@@ -31,6 +36,46 @@ public class Film implements Comparable<Film> {
         this.description = description;
         this.releaseDate = releaseDate;
         this.duration = Duration.ofSeconds(second);
+    }
+
+    public Film(int id, String name, String description, Long duration, LocalDate releaseDate, Integer raitingId, List<Genre> genres) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.releaseDate = releaseDate;
+        this.duration = Duration.ofSeconds(duration);
+        this.mpa = new Rating(raitingId, null);
+        this.genres = genres;
+    }
+
+    public Film(int id, String name, String description, Long duration, LocalDate releaseDate, Rating mpa, List<Genre> genres) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.releaseDate = releaseDate;
+        this.duration = Duration.ofSeconds(duration);
+        this.mpa = mpa;
+        this.genres = genres;
+    }
+
+    public Film(int id, String name, String description, Long duration, LocalDate releaseDate, Integer raitingId) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.releaseDate = releaseDate;
+        this.duration = Duration.ofSeconds(duration);
+        this.mpa = new Rating(raitingId, null);
+    }
+
+    public Film(int id, String name, String description, LocalDate releaseDate, Duration duration, Set<Integer> likes, Rating mpa, List<Genre> genres) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.releaseDate = releaseDate;
+        this.duration = duration;
+        this.likes = likes;
+        this.mpa = mpa;
+        this.genres = genres;
     }
 
     public Long getDuration() {

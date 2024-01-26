@@ -1,4 +1,4 @@
-package ru.yandex.practicum.filmorate.storage;
+package ru.yandex.practicum.filmorate.storage.memory;
 
 import lombok.Getter;
 import org.springframework.stereotype.Component;
@@ -11,7 +11,7 @@ import java.util.List;
 
 @Getter
 @Component
-public class InMemoryFilmStorage implements FilmStorage {
+public class InMemoryFilmStorage {
     private final HashMap<Integer, Film> films = new HashMap<>();
     private static int generateFilmId = 0;
 

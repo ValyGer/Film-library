@@ -16,22 +16,22 @@ _Получение информации о пользователе с ID = 1:_
 
 <pre>SELECT *
 FROM users
-WHERE users.id = 1;
+WHERE users.user_id = 1;
 </pre>  
 _Сортировка фильмов по жанрам:_
-<pre>SELECT g.name,
-       f.name      	
+<pre>SELECT g.genre_name,
+       f.film_name      	
 FROM films AS f
-JOIN film_genre AS fg ON f.id  = fg.film_id
-JOIN genre AS g ON fg.genre_id = g.genre_id 
-order by g.name; 
+JOIN film_genres AS fg ON f.film_id  = fg.film_id
+JOIN genres AS g ON fg.genre_id = g.genre_id 
+order by g.genre_name; 
 </pre>
 
-_Получение списка фильмов, которым поставил лайк пользователь в имени которого первая буква "Д":_
+_Получение списка фильмов, которым поставил лайк пользователь. В имени пользователя первая буква "Д":_
 <pre>SELECT *
-FROM (SELECT f."name" AS f_name, 
-			 u."name" AS u_name 
-	  FROM films f JOIN film_likes fl ON f.id = fl.film_id 
-	               JOIN users u ON fl.user_id = u.id) AS fu 
-WHERE substr("u_name", 1 , 1) = 'Д'; 
+FROM (SELECT f.film_name AS f_name, 
+			 u.user_name AS u_name 
+	  FROM films f JOIN film_likes fl ON f.film_id = fl.film_id 
+	               JOIN users u ON fl.user_id = u.user_id) AS fu 
+WHERE substr(u_name, 1 , 1) = 'Д'; 
 </pre>

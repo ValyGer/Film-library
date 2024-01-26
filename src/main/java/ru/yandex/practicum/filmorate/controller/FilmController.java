@@ -1,8 +1,8 @@
 package ru.yandex.practicum.filmorate.controller;
 
 import lombok.RequiredArgsConstructor;
-import ru.yandex.practicum.filmorate.model.Film;
 import org.springframework.web.bind.annotation.*;
+import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.service.FilmService;
 
 import java.util.List;
@@ -48,5 +48,4 @@ public class FilmController {
     public List<Film> findPopularFilms(@RequestParam(value = "count", defaultValue = "10", required = false) String count) {
         return filmService.findPopularFilms(count);
     }
-
 }

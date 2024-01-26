@@ -11,7 +11,7 @@ public interface UserService {
 
     List<User> getAllUsers();
 
-    User addFriends(Integer userId, Integer userFriendId);
+    User addFriend(Integer userId, Integer userFriendId);
 
     User findUserById(Integer userId);
 
@@ -19,5 +19,5 @@ public interface UserService {
 
     List<User> getCommonFriends(Integer userId, Integer userFriend);
 
-    User deleteFriendFromSet(Integer userId, Integer userFriend);
+    User deleteFriend(Integer userId, Integer userFriend);
 }
